@@ -15,11 +15,6 @@ jobs:
       
       redis:
         image: redis:7-alpine
-        restart: unless-stopped
-        ports:
-          - '${REDIS_PORT:-6379}:6379'
-        environment:
-          - REDIS_PORT=${REDIS_PORT}
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
