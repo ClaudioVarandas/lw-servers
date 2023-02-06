@@ -32,26 +32,28 @@
 
 - Unit test
 - Feature test
+- Bug fix
 
 ### Known bugs
 
-- RAM Options on the frontend
+- Frontend
+  - RAM Options checkbox
 
 ### Env vars
 
 ```
-APP_ENV=
-APP_SECRET=
+APP_ENV=dev
+APP_SECRET=389a7b6a7721515acbc66605f3ee12c2
 COMPOSE_FILE=docker-compose.yml:docker-compose.custom.yml
-REDIS_PORT=
-HTTP_PORT=
-HTTPS_PORT
+REDIS_PORT=6385
+HTTP_PORT=89
+HTTPS_PORT=8443
 ```
 
 ### Requirements
 
-- docker
-- node & npm
+- docker and docker compose
+- node 16 & npm 8.11
 
 ### Setup
 
@@ -61,3 +63,15 @@ HTTPS_PORT
 - npm i
 - npm run build
 - docker compose up -d
+- docker exec -it lw-servers-php-1 sh
+- composer install
+- Navigate to: `http://<hostname>:89/`
+
+Or ask for the public link :)
+
+### Tests
+
+- Run `docker exec -it leaseweb-servers-php_test-1 sh` to enter the tests container
+- Run `php bin/phpunit`
+
+

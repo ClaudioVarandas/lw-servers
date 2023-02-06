@@ -5,9 +5,9 @@ namespace App\Parser;
 class ServerListFilterParser
 {
     // TODO get this options from the imported values instead to avoid options mismatch!
-    private const STORAGE_OPTIONS = [0, 240, 500, 1024, 2048, 3072, 4096, 8192, 12288, 16384,24576, 49152, 73728];
-    private const STORAGE_TYPE_OPTIONS = ['sata2', 'ssd', 'sas'];
-    private const RAM_OPTIONS = [2, 4, 8, 12, 16, 24, 32, 48, 64, 96];
+    public const STORAGE_OPTIONS = [0, 240, 500, 1024, 2048, 3072, 4096, 8192, 12288, 16384,24576, 49152, 73728];
+    public const STORAGE_TYPE_OPTIONS = ['sata2', 'ssd', 'sas'];
+    public const RAM_OPTIONS = [2, 4, 8, 12, 16, 24, 32, 48, 64, 96];
 
     public function parse(array $filters): array
     {

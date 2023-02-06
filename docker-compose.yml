@@ -32,4 +32,13 @@ services:
     environment:
       - REDIS_PORT=${REDIS_PORT}
 
-    
+  php_test:
+    build:
+      context: ./docker
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html
+    env_file:
+      - .env.test
+    depends_on:
+      - redis

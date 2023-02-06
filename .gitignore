@@ -33,3 +33,5 @@ storage/default/
 
 public/build
 app/public
+
+.idea/
