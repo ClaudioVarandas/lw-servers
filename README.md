@@ -32,8 +32,6 @@
 
 ### TODO
 
-- Unit test
-- Feature test
 - Bug fix
 
 ### Known bugs
