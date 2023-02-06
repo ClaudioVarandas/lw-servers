@@ -12,11 +12,14 @@ jobs:
     runs-on: 'ubuntu-latest'
     
     services:
-      # Label used to access the service container
+      
       redis:
-        # Docker Hub image
-        image: redis
-        # Set health checks to wait until redis has started
+        image: redis:7-alpine
+        restart: unless-stopped
+        ports:
+          - '${REDIS_PORT:-6379}:6379'
+        environment:
+          - REDIS_PORT=${REDIS_PORT}
         options: >-
           --health-cmd "redis-cli ping"
           --health-interval 10s
@@ -29,17 +32,6 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
-          
-      - name: Connect to Redis
-        # Runs a script that creates a Redis client, populates
-        # the client with data, and retrieves data
-        run: node client.js
-        # Environment variable used by the `client.js` script to create a new Redis client.
-        env:
-          # The hostname used to communicate with the Redis service container
-          REDIS_HOST: redis
-          # The default Redis port
-          REDIS_PORT: 6379
         
       - name: PHPUnit
         uses: chindit/actions-phpunit-symfony@master
