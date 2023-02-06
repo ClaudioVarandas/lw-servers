@@ -28,9 +28,6 @@ yarn-error.log
 
 storage/default/
 
-.env
-.env.test
-
 public/build
 app/public
 
