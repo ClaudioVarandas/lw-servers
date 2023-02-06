@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% include 'partial/header.html.twig' %}
+    <!-- Page header with logo and tagline-->
+    <header class="bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="fw-bolder">{{ location }}</h1>
+                <p class="lead mb-0">Here is our servers offer.</p>
+            </div>
+        </div>
+    </header>
+    <!-- Page content-->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+
+                <div class="row">
+                    {% for item in serversList %}
+                        <div class="col-sm-4 my-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6>{{ item.model }}</h6>
+                                    <div class="spec">
+                                        <div class="spec_label">RAM:</div>
+                                        <div class="spec_value">{{ item.ram }} </div>
+                                    </div>
+                                    <div class="spec">
+                                        <div class="spec_label">HDD:</div>
+                                        <div class="spec_value">{{ item.hdd }} </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <h5><span class="badge bg-primary">{{ item.price }}</span></h5>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% if serversList is empty %}
+                        <h5 class="my-5">Sorry, no options available at this moment for the selection made :(</h5>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-3">
+                <!-- Categories widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Filters</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Locations -->
+                                <div class="mb-4">
+                                    <label class="form-label" for="location">Location:</label>
+                                    <select class="form-select" name="location" id="location">
+                                        {% for item in locations %}
+                                            {% set isLocationSelected = '' %}
+                                            {% if (app.request.query.get('location') == item.value) %}
+                                                {% set isLocationSelected = 'selected' %}
+                                            {% endif %}
+                                            <option value="{{ item.value }}" {{ isLocationSelected }}>
+                                                {{ item.label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <!-- HDD Type -->
+                                <div class="mb-4">
+                                    <label class="form-label" for="storage_type">HDD type:</label>
+                                    <select class="form-select" name="storage_type" id="storage_type">
+                                        <option value="#">-- Select HDD Type --</option>
+                                        {% for item in storageType %}
+                                            {% set isStorageTypeSelected = '' %}
+                                            {% if (app.request.query.get('storage_type') == item.value) %}
+                                                {% set isStorageTypeSelected = 'selected' %}
+                                            {% endif %}
+                                            <option value="{{ item.value }}" {{ isStorageTypeSelected }}>
+                                                {{ item.label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <!-- RAM -->
+                                <div class="mb-4">
+                                    <fieldset>
+                                        <label class="form-label">RAM:</label>
+                                        <div id="ram_choices">
+                                            {% for item in ramOptions %}
+                                                {% set isRamChecked = '' %}
+                                                {% if (item.value in ramChecked) %}
+                                                    {% set isRamChecked = 'checked' %}
+                                                {% endif %}
+                                                <div>
+                                                    <label>
+                                                        <input type="checkbox"
+                                                               name="{{ item.label }}"
+                                                               value="{{ item.value }}"
+                                                                {{ isRamChecked }}>
+                                                        {{ item.label }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <!-- Storage -->
+                                <div class="mb-4">
+                                    <label class="form-label">Storage:</label>
+                                    <input id="storage_options" type="range" min="0" value="{{ storageValue }}" max="11" step="1"/>
+                                    <div id="storage_options_label"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{ encore_entry_script_tags('servers') }}
+{% endblock %}
+
+

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'partial/header.html.twig' %}
+    <header class="bg-light border-bottom mb-4">
+        <div class="container">
+            <div class="text-center">
+                <h3 class="fw-bolder">Upload servers list</h3>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="wrapper my-5 d-flex p-2 justify-content-center">
+                    <div>
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="flash-{{ label }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="example-wrapper">
+                        {{ form_start(form) }}
+                        {{ form_row(form.servers_list) }}
+                        {{ form_row(form.submit) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

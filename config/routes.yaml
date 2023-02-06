@@ -1,0 +1,38 @@
+backend_upload_post:
+    path:       /backend/upload
+    controller: App\Controller\BackendUploadController::servers
+    methods:    GET|POST
+
+frontend_index:
+    path: /
+    controller: App\Controller\FrontendController::index
+    methods: GET
+ 
+# API
+    
+# Servers
+api_server_index:
+    path:       /servers
+    controller: App\Controller\Api\ServerController::index
+    methods:    GET
+    
+# OPTIONS
+api_options_locations_index:
+    path:       /options/locations
+    controller: App\Controller\Api\OptionController::getLocations
+    methods:    GET
+
+api_options_storage_types_index:
+    path:       /options/storage-types
+    controller: App\Controller\Api\OptionController::getStorageTypes
+    methods:    GET
+
+api_options_storage_index:
+    path:       /options/storage
+    controller: App\Controller\Api\OptionController::getStorage
+    methods:    GET
+
+api_options_ram_index:
+    path:       /options/ram
+    controller: App\Controller\Api\OptionController::getRam
+    methods:    GET
