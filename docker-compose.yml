@@ -29,5 +29,7 @@ services:
     restart: unless-stopped
     ports:
       - '${REDIS_PORT:-6379}:6379'
+    environment:
+      - REDIS_PORT=${REDIS_PORT}
 
     
