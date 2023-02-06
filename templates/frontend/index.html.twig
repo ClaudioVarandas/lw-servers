@@ -89,7 +89,7 @@
                                         <div id="ram_choices">
                                             {% for item in ramOptions %}
                                                 {% set isRamChecked = '' %}
-                                                {% if (item.value in ramChecked) %}
+                                                {% if (item.value in ramChecked[0]|split(',')) %}
                                                     {% set isRamChecked = 'checked' %}
                                                 {% endif %}
                                                 <div>

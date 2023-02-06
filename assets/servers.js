@@ -1,5 +1,5 @@
 // Storage options
-let values = JSON.parse('[{"label":"0","value":0},{"label":"250GB","value":250},{"label":"500GB","value":500},{"label":"1TB","value":1024},{"label":"2TB","value":2048},{"label":"3TB","value":3072},{"label":"4TB","value":4096},{"label":"8TB","value":8192},{"label":"12TB","value":12288},{"label":"24TB","value":24576},{"label":"48TB","value":49152},{"label":"72TB","value":73728}]');
+let values = JSON.parse('[{"label":"0","value":0},{"label":"240GB","value":240},{"label":"500GB","value":500},{"label":"1TB","value":1024},{"label":"2TB","value":2048},{"label":"3TB","value":3072},{"label":"4TB","value":4096},{"label":"8TB","value":8192},{"label":"12TB","value":12288},{"label":"24TB","value":24576},{"label":"48TB","value":49152},{"label":"72TB","value":73728}]');
 
 let $storageOptionsEl = document.getElementById('storage_options'),
   $storageOptionsLabelEl = document.getElementById('storage_options_label');
@@ -13,7 +13,7 @@ $storageOptionsEl.oninput = function () {
 $storageOptionsEl.oninput();
 
 $storageOptionsEl.addEventListener('change',function (){
-  const params = new URLSearchParams(window.location.search)
+  let params = new URLSearchParams(window.location.search)
   params.set('storage', values[this.value].value)
   let newParams = params.toString()
   window.history.pushState(null, null, '?' + newParams)
@@ -23,7 +23,7 @@ $storageOptionsEl.addEventListener('change',function (){
 // Location options
 let $locationEl = document.getElementById('location')
 $locationEl.addEventListener('change', function handleChange(event) {
-  const params = new URLSearchParams(window.location.search)
+  let params = new URLSearchParams(window.location.search)
   params.set('location', this.value)
   let newParams = params.toString()
   window.history.pushState(null, null, '?' + newParams)
@@ -33,7 +33,7 @@ $locationEl.addEventListener('change', function handleChange(event) {
 // Storage type options
 let $storageTypeEl = document.getElementById('storage_type')
 $storageTypeEl.addEventListener('change', function handleChange(event) {
-  const params = new URLSearchParams(window.location.search)
+  let params = new URLSearchParams(window.location.search)
   params.set('storage_type', this.value)
   let newParams = params.toString()
   window.history.pushState(null, null, '?' + newParams)
@@ -48,17 +48,31 @@ let len = $ramOptions.length;
 for (let i = 0; i < len; i++) {
   if ($ramOptions[i].type === 'checkbox') {
     $ramOptions[i].onclick = function (){
-      //const params = new URLSearchParams(window.location.search)
+      // I know there is a bug here somewhere :D , that puts empty value on the array
+      let params = new URLSearchParams(window.location.search)
 
-      //const values = Array.from(params.values());
-      //const entries = Array.from(params.entries())
-      //const hasRam = params.has('ram');
-      //console.log(entries)
+      let ramValues = params.get('ram[]')
+      if(ramValues === null){
+        ramValues = new Array(this.value);
+      }else{
+        let oldRamValues = ramValues.split(',')
 
+        if(this.checked){
+          console.log(this.value)
+          oldRamValues.push(this.value)
+        }else {
+          const index = oldRamValues.indexOf(this.value);
+          if (index > -1) {
+            oldRamValues.splice(index, 1);
+          }
+        }
+        ramValues = oldRamValues
+      }
 
-//      let newParams = params.toString()
-//      window.history.pushState(null, null, '?' + newParams)
-//      document.location.reload()
+      params.set('ram[]', ramValues.toString())
+      let newParams = params.toString()
+      window.history.pushState(null, null, '?' + newParams)
+      document.location.reload()
     };
   }
 }

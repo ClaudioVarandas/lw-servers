@@ -29,10 +29,18 @@
 | Locations     | GET    | index   | `http://localhost:89/options/storage`       |
 | Locations     | GET    | index   | `http://localhost:89/options/ram`           |
 
+### Backend
+
+- `http://localhost:89/backend/upload`
 
 ### TODO
 
 - Bug fix
+- Units convertion throught converter class (MB/GB/TB...)
+- Remove some hardcoded stuff
+- Better UI
+- Better Frontend setup
+- ...
 
 ### Known bugs
 
@@ -68,6 +76,8 @@ HTTPS_PORT=8443
 - Navigate to: `http://<hostname>:89/`
 
 Or ask for the public link :)
+
+Upload the excel file : `http://localhost:89/options/ram`
 
 ### Tests
 

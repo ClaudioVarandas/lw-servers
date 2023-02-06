@@ -51,7 +51,7 @@ class FrontendController extends AbstractController
             'storageType' => $storageType[DataKeys::STORAGE_TYPES_OPTIONS->key()] ?? [],
             'ramOptions' => $ramOptions[DataKeys::RAM_OPTIONS->key()] ?? [],
             'storageOptions' => $storageOptions[DataKeys::STORAGE_OPTIONS->key()] ?? [],
-            'ramChecked' => $request->get('ram'),
+            'ramChecked' => $request->get('ram',[0 =>""]),
             'storageValue' => $storageValue ?? 0
         ]);
     }
