@@ -41,12 +41,7 @@ class ServerListFilterParserTest extends TestCase
         $this->assertArrayHasKey('storage', $filtersParsed);
         $this->assertCount(1, $filtersParsed['storage_type']);
         $this->assertEquals($filters['storage_type'], reset($filtersParsed['storage_type']));
-
         $this->assertIsArray($filtersParsed['ram']);
-
-        /*dump($filters['ram']);
-        dump($filtersParsed['ram']);
-        die();*/
 
         if(!empty($filters['ram'])){
             $ramCheckedValues = reset($filters['ram']);
@@ -86,7 +81,7 @@ class ServerListFilterParserTest extends TestCase
     private function filtersDataProvider(): array
     {
         return [
-/*            'scenario_a' => [
+            'scenario_a' => [
                 'filters' => [
                     'storage_type' => 'sata2',
                     'ram' => [0 => '2, 4, 16'],
@@ -111,7 +106,7 @@ class ServerListFilterParserTest extends TestCase
                     'storage_type' => 'ssd',
                     'storage' => 2048
                 ]
-            ],*/
+            ],
             'scenario_e' => [
                 'filters' => [
                     'storage_type' => 'sata2',

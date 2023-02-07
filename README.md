@@ -35,23 +35,19 @@
 
 ### TODO
 
-- Bug fix
-- Units convertion throught converter class (MB/GB/TB...)
+- Better filter handling frontend
+- Units converter (MB/GB/TB...)
 - Remove some hardcoded stuff
 - Better UI
 - Better Frontend setup
+- Improvements
 - ...
-
-### Known bugs
-
-- Frontend
-  - RAM Options checkbox
 
 ### Env vars
 
 ```
 APP_ENV=dev
-APP_SECRET=389a7b6a7721515acbc66605f3ee12c2
+APP_SECRET=someSecret
 COMPOSE_FILE=docker-compose.yml:docker-compose.custom.yml
 REDIS_PORT=6385
 HTTP_PORT=89

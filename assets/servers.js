@@ -12,32 +12,38 @@ $storageOptionsEl.oninput = function () {
 };
 $storageOptionsEl.oninput();
 
-$storageOptionsEl.addEventListener('change',function (){
+function handleParams(paramName, optionValue) {
   let params = new URLSearchParams(window.location.search)
-  params.set('storage', values[this.value].value)
+
+  switch (paramName) {
+    case 'storage':
+      params.set(paramName, values[optionValue].value)
+      break;
+    default:
+      params.set(paramName, optionValue)
+      break;
+  }
+
   let newParams = params.toString()
   window.history.pushState(null, null, '?' + newParams)
   document.location.reload()
+}
+
+// Storage options
+$storageOptionsEl.addEventListener('change', function () {
+  handleParams('storage', this.value)
 });
 
 // Location options
 let $locationEl = document.getElementById('location')
 $locationEl.addEventListener('change', function handleChange(event) {
-  let params = new URLSearchParams(window.location.search)
-  params.set('location', this.value)
-  let newParams = params.toString()
-  window.history.pushState(null, null, '?' + newParams)
-  document.location.reload()
+  handleParams('location', this.value)
 });
 
 // Storage type options
 let $storageTypeEl = document.getElementById('storage_type')
 $storageTypeEl.addEventListener('change', function handleChange(event) {
-  let params = new URLSearchParams(window.location.search)
-  params.set('storage_type', this.value)
-  let newParams = params.toString()
-  window.history.pushState(null, null, '?' + newParams)
-  document.location.reload()
+  handleParams('storage_type', this.value)
 });
 
 // Ram options
@@ -47,20 +53,20 @@ let len = $ramOptions.length;
 
 for (let i = 0; i < len; i++) {
   if ($ramOptions[i].type === 'checkbox') {
-    $ramOptions[i].onclick = function (){
+    $ramOptions[i].onclick = function () {
       // I know there is a bug here somewhere :D , that puts empty value on the array
       let params = new URLSearchParams(window.location.search)
 
       let ramValues = params.get('ram[]')
-      if(ramValues === null){
+      if (ramValues === null) {
         ramValues = new Array(this.value);
-      }else{
+      } else {
         let oldRamValues = ramValues.split(',')
 
-        if(this.checked){
+        if (this.checked) {
           console.log(this.value)
           oldRamValues.push(this.value)
-        }else {
+        } else {
           const index = oldRamValues.indexOf(this.value);
           if (index > -1) {
             oldRamValues.splice(index, 1);

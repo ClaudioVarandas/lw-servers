@@ -14,37 +14,53 @@ class ServerListFilterParser
         if (empty($filters['storage_type'])) {
             $filters['storage_type'] = self::STORAGE_TYPE_OPTIONS;
         } else {
-            $filters['storage_type'] = in_array($filters['storage_type'], self::STORAGE_TYPE_OPTIONS) ?
-                [strtolower($filters['storage_type'])] :
-                self::STORAGE_TYPE_OPTIONS;
+            $this->parseStorageTypeFilter($filters);
         }
+
         if (empty($filters['ram']) || !is_array($filters['ram'])) {
             $filters['ram'] = self::RAM_OPTIONS;
         } else {
-            $ramSelectedValues = reset($filters['ram']);
-            $ramValues = [];
-            if(!empty($ramSelectedValues)){
-                $ramSelectedValues = explode(',',$ramSelectedValues);
-                foreach ($ramSelectedValues as $value){
-                    if(!empty($value)){
-                        $ramValues[] = (int)$value;
-                    }
-                }
-                sort($ramValues);
-            }else{
-             $ramValues = self::RAM_OPTIONS;
-            }
-            $filters['ram'] = array_values(array_intersect(self::RAM_OPTIONS,$ramValues));
+            $this->parseRamFilter($filters);
         }
 
         if (empty($filters['storage'])) {
             $filters['storage'] = self::STORAGE_OPTIONS;
         } else {
-            $filters['storage'] = in_array($filters['storage'], self::STORAGE_OPTIONS) ?
-                [strtolower($filters['storage'])] :
-                self::STORAGE_OPTIONS;
+            $this->parseStorageFilter($filters);
         }
 
         return $filters;
+    }
+
+    private function parseStorageTypeFilter(array &$filters): void
+    {
+        $filters['storage_type'] = in_array($filters['storage_type'], self::STORAGE_TYPE_OPTIONS) ?
+            [strtolower($filters['storage_type'])] :
+            self::STORAGE_TYPE_OPTIONS;
+    }
+
+    private function parseRamFilter(array &$filters): void
+    {
+        $ramSelectedValues = reset($filters['ram']);
+        $ramValues = [];
+        if (!empty($ramSelectedValues)) {
+            $ramSelectedValues = explode(',', $ramSelectedValues);
+            foreach ($ramSelectedValues as $value) {
+                if (!empty($value)) {
+                    $ramValues[] = (int)$value;
+                }
+            }
+            sort($ramValues);
+        } else {
+            $ramValues = self::RAM_OPTIONS;
+        }
+        $filters['ram'] = array_values(array_intersect(self::RAM_OPTIONS, $ramValues));
+    }
+
+    private function parseStorageFilter(array &$filters): void
+    {
+        $filters['storage'] = in_array($filters['storage'], self::STORAGE_OPTIONS) ?
+            [strtolower($filters['storage'])] :
+            self::STORAGE_OPTIONS;
     }
 }
