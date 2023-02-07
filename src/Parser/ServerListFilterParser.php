@@ -21,8 +21,19 @@ class ServerListFilterParser
         if (empty($filters['ram']) || !is_array($filters['ram'])) {
             $filters['ram'] = self::RAM_OPTIONS;
         } else {
-            $ramValues = reset($filters['ram']);
-            $ramValues = !empty($ramValues) ? explode(',', $ramValues) : self::RAM_OPTIONS;
+            $ramSelectedValues = reset($filters['ram']);
+            $ramValues = [];
+            if(!empty($ramSelectedValues)){
+                $ramSelectedValues = explode(',',$ramSelectedValues);
+                foreach ($ramSelectedValues as $value){
+                    if(!empty($value)){
+                        $ramValues[] = (int)$value;
+                    }
+                }
+                sort($ramValues);
+            }else{
+             $ramValues = self::RAM_OPTIONS;
+            }
             $filters['ram'] = array_values(array_intersect(self::RAM_OPTIONS,$ramValues));
         }
 

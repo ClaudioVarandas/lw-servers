@@ -68,9 +68,9 @@ class DataRepository
         $data = $this->getData($key);
         $servers = [];
         $serversFiltered = [];
-
+//dump($filters);
         $filters = $this->serverListFilterParser->parse($filters);
-
+//dd($filters);
         foreach ($data as $item) {
             $serversFiltered[] = array_filter($item, function ($value) use ($filters) {
                 return in_array(strtolower($value['_storage-type']), $filters['storage_type'])

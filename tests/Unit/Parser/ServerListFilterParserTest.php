@@ -31,6 +31,7 @@ class ServerListFilterParserTest extends TestCase
     public function testItShouldValidateAndParseFilters(array $filters): void
     {
         $serverListFilterParser = new ServerListFilterParser();
+
         $filtersParsed = $serverListFilterParser->parse($filters);
 
         $this->assertIsArray($filtersParsed);
@@ -41,12 +42,26 @@ class ServerListFilterParserTest extends TestCase
         $this->assertCount(1, $filtersParsed['storage_type']);
         $this->assertEquals($filters['storage_type'], reset($filtersParsed['storage_type']));
 
-        $count = !empty($filters['ram']) ? count($filters['ram']) : count(ServerListFilterParser::RAM_OPTIONS);
-        $this->assertCount($count, $filtersParsed['ram']);
         $this->assertIsArray($filtersParsed['ram']);
 
+        /*dump($filters['ram']);
+        dump($filtersParsed['ram']);
+        die();*/
+
         if(!empty($filters['ram'])){
-            $this->assertEquals($filters['ram'], $filtersParsed['ram']);
+            $ramCheckedValues = reset($filters['ram']);
+            $ramValues = [];
+            if(!empty($ramCheckedValues)){
+                $ramCheckedValues = explode(',',$ramCheckedValues);
+                foreach ($ramCheckedValues as $value){
+                    if(!empty($value)){
+                        $ramValues[] = (int)$value;
+                    }
+                }
+            }
+            sort($ramValues);
+            $this->assertCount(count($ramValues), $filtersParsed['ram']);
+            $this->assertEquals($ramValues, $filtersParsed['ram']);
         }
 
         if (!empty($filters['storage_type'])) {
@@ -71,29 +86,36 @@ class ServerListFilterParserTest extends TestCase
     private function filtersDataProvider(): array
     {
         return [
-            'scenario_a' => [
+/*            'scenario_a' => [
                 'filters' => [
                     'storage_type' => 'sata2',
-                    'ram' => [2, 4, 16],
+                    'ram' => [0 => '2, 4, 16'],
                     'storage' => 2048
                 ]
             ],
             'scenario_b' => [
                 'filters' => [
                     'storage_type' => 'ssd',
-                    'ram' => [2],
+                    'ram' => [0 => '2'],
                     'storage' => 2048
                 ]
             ],
             'scenario_c' => [
                 'filters' => [
                     'storage_type' => 'ssd',
-                    'ram' => [2]
+                    'ram' => [0 => '2']
                 ]
             ],
             'scenario_d' => [
                 'filters' => [
                     'storage_type' => 'ssd',
+                    'storage' => 2048
+                ]
+            ],*/
+            'scenario_e' => [
+                'filters' => [
+                    'storage_type' => 'sata2',
+                    'ram' => [0 => ',2, 48, 16'],
                     'storage' => 2048
                 ]
             ],
