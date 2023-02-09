@@ -70,6 +70,11 @@ Or ask for the public link :)
 
 Upload the excel file : `http://localhost:89/options/ram`
 
+### Github CI
+
+`https://github.com/ClaudioVarandas/lw-servers/blob/main/.github/workflows/ci.yml`
+
+
 ### Tests
 
 - Run `docker exec -it leaseweb-servers-php_test-1 sh` to enter the tests container
