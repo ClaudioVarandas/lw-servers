@@ -19,6 +19,10 @@
   - ram
   - storage types
 
+### Application Diagram Flow
+
+![Application Diagram Flow](/assets/doc/lw_arquitecture.png)
+
 ### API Endpoints
 
 | Endpoint      | Method | Action  | Url                                         |
@@ -33,15 +37,6 @@
 
 - `http://localhost:89/backend/upload`
 
-### TODO
-
-- Better filter handling frontend
-- Units converter (MB/GB/TB...)
-- Remove some hardcoded stuff
-- Better UI
-- Better Frontend setup
-- Improvements
-- ...
 
 ### Env vars
 
@@ -80,4 +75,21 @@ Upload the excel file : `http://localhost:89/options/ram`
 - Run `docker exec -it leaseweb-servers-php_test-1 sh` to enter the tests container
 - Run `php bin/phpunit`
 
+### TODO
+
+- Better filter handling frontend
+- Units converter (MB/GB/TB...)
+- Remove some hardcoded stuff
+- Better UI
+- Better Frontend setup
+- Improvements
+- ...
+
+### Future improvements (if required)
+
+- Create the Filter Validator and remove validation from the ServerListFilterParser
+- Business logic under a domain layer
+- Decouple the frontend into a SPA, using the existing API
+- Auth 
+- ...
 
