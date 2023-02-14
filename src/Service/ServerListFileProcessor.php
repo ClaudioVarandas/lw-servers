@@ -87,8 +87,10 @@ class ServerListFileProcessor
 
         $this->reader->open($filePath);
 
-        foreach ($this->reader->getSheetIterator() as $sheet) {
-            if ($sheet->getName() === 'Sheet2') {
+        $iterator = $this->reader->getSheetIterator();
+
+        foreach ($iterator as $sheet) {
+            if ($iterator->key() === 1) {
                 foreach ($sheet->getRowIterator() as $key => $row) {
                     // Assuming the row 1 is the header
                     if ($key === 1) {

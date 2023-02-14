@@ -68,7 +68,7 @@ HTTPS_PORT=8443
 
 Or ask for the public link :)
 
-Upload the excel file : `http://localhost:89/options/ram`
+Upload the excel file : `http://localhost:89/backend/upload` , the data should on the first sheet.
 
 ### Github CI
 

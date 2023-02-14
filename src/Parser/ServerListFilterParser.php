@@ -9,37 +9,39 @@ class ServerListFilterParser
     public const STORAGE_TYPE_OPTIONS = ['sata2', 'ssd', 'sas'];
     public const RAM_OPTIONS = [2, 4, 8, 12, 16, 24, 32, 48, 64, 96];
 
+    public const FILTERS_ALLOWED = ['storage_type', 'ram', 'storage'];
+
     public function parse(array $filters): array
     {
-        if (empty($filters['storage_type'])) {
-            $filters['storage_type'] = self::STORAGE_TYPE_OPTIONS;
-        } else {
+        $filters = array_intersect_key(
+            $filters,
+            array_flip(self::FILTERS_ALLOWED)
+        );
+
+        $filters['storage_type'] = empty($filters['storage_type']) ?
+            self::STORAGE_TYPE_OPTIONS :
             $this->parseStorageTypeFilter($filters);
-        }
 
-        if (empty($filters['ram']) || !is_array($filters['ram'])) {
-            $filters['ram'] = self::RAM_OPTIONS;
-        } else {
+        $filters['ram'] = empty($filters['ram']) || !is_array($filters['ram']) ?
+            self::RAM_OPTIONS :
             $this->parseRamFilter($filters);
-        }
 
-        if (empty($filters['storage'])) {
-            $filters['storage'] = self::STORAGE_OPTIONS;
-        } else {
+
+        $filters['storage'] = empty($filters['storage']) ?
+            self::STORAGE_OPTIONS :
             $this->parseStorageFilter($filters);
-        }
 
         return $filters;
     }
 
-    private function parseStorageTypeFilter(array &$filters): void
+    private function parseStorageTypeFilter(array $filters): array
     {
-        $filters['storage_type'] = in_array($filters['storage_type'], self::STORAGE_TYPE_OPTIONS) ?
+        return in_array($filters['storage_type'], self::STORAGE_TYPE_OPTIONS) ?
             [strtolower($filters['storage_type'])] :
             self::STORAGE_TYPE_OPTIONS;
     }
 
-    private function parseRamFilter(array &$filters): void
+    private function parseRamFilter(array $filters): array
     {
         $ramSelectedValues = reset($filters['ram']);
         $ramValues = [];
@@ -54,12 +56,13 @@ class ServerListFilterParser
         } else {
             $ramValues = self::RAM_OPTIONS;
         }
-        $filters['ram'] = array_values(array_intersect(self::RAM_OPTIONS, $ramValues));
+
+        return array_values(array_intersect(self::RAM_OPTIONS, $ramValues));
     }
 
-    private function parseStorageFilter(array &$filters): void
+    private function parseStorageFilter(array $filters): array
     {
-        $filters['storage'] = in_array($filters['storage'], self::STORAGE_OPTIONS) ?
+        return in_array($filters['storage'], self::STORAGE_OPTIONS) ?
             [strtolower($filters['storage'])] :
             self::STORAGE_OPTIONS;
     }

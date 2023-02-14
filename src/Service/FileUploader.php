@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use League\Flysystem\FilesystemOperator;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
